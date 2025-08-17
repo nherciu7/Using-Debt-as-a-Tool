@@ -13,7 +13,7 @@
     <!-- Application Structure Plan: A single-page, scrollable dashboard designed as a narrative journey. It starts with high-level philosophy (the "Why"), moves to market data exploration (the "Where"), provides an interactive calculation tool (the "How"), and concludes with a step-by-step execution plan. This structure is chosen to guide a novice investor logically from concept to action, making a complex strategy digestible and engaging. The core interaction is centered around the "Profit Spread Calculator," allowing users to immediately apply the core lesson of the report. -->
     <!-- Visualization & Content Choices: 
         - Cashflow Quadrant: Goal: Organize/Inform. Method: HTML/CSS diagram. Interaction: Hover effects. Justification: A simple, clear visual representation of a core concept from the source material. No library needed.
-        - City Market Data: Goal: Compare. Method: Interactive Bar Chart (Chart.js). Interaction: User can select a city via buttons to dynamically update the chart data. Justification: Chart.js on Canvas provides a highly interactive and visually appealing way to compare quantitative data across multiple locations, which is superior to a static table.
+        - City Market Data: Goal: Compare. Method: Interactive Grouped Bar Chart (Chart.js). Interaction: User can select a metric (Price, Growth, Yield) via buttons to dynamically update the chart, comparing all cities for that single metric. Justification: This is a clearer, more direct comparison method than a multi-metric chart, making it easier for users to understand specific market dynamics.
         - Profit Spread Formula: Goal: Inform/Calculate. Method: Interactive Calculator (HTML form + JS). Interaction: User inputs data via sliders/fields to see real-time calculation of their potential investment spread. Justification: This is the central "learning-by-doing" element. It transforms a static formula into a powerful, personalized analysis tool.
         - Blueprint Steps: Goal: Organize/Inform. Method: Accordion-style clickable sections (HTML/JS). Interaction: Clicking a step reveals detailed information. Justification: This organizes a large amount of text into a clean, user-driven format, preventing information overload.
     -->
@@ -24,48 +24,48 @@
             background-color: #FDFBF7; /* Warm off-white */
             color: #1a202c;
         }
-        .bg-primary { background-color: #FDFBF7; }
-        .bg-secondary { background-color: #FFFFFF; }
-        .text-primary { color: #1a202c; }
-        .text-secondary { color: #4a5568; }
-        .text-accent { color: #0A2342; } /* Deep Blue */
-        .border-accent { border-color: #0A2342; }
-        .bg-accent { background-color: #0A2342; }
-        .highlight-accent { color: #D4AF37; } /* Gold Accent */
-        .btn-primary {
+       .bg-primary { background-color: #FDFBF7; }
+       .bg-secondary { background-color: #FFFFFF; }
+       .text-primary { color: #1a202c; }
+       .text-secondary { color: #4a5568; }
+       .text-accent { color: #0A2342; } /* Deep Blue */
+       .border-accent { border-color: #0A2342; }
+       .bg-accent { background-color: #0A2342; }
+       .highlight-accent { color: #D4AF37; } /* Gold Accent */
+       .btn-primary {
             background-color: #0A2342;
             color: #FFFFFF;
             transition: all 0.3s ease;
         }
-        .btn-primary:hover {
+       .btn-primary:hover {
             background-color: #004282;
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .btn-secondary {
+       .btn-secondary {
             background-color: #FFFFFF;
             color: #0A2342;
             border: 1px solid #0A2342;
             transition: all 0.3s ease;
         }
-        .btn-secondary:hover {
+       .btn-secondary:hover {
             background-color: #f0f0f0;
         }
-        .btn-active {
-            background-color: #0A2342 !important;
-            color: #FFFFFF !important;
+       .btn-active {
+            background-color: #0A2342!important;
+            color: #FFFFFF!important;
         }
-        .card {
+       .card {
             background-color: #FFFFFF;
             border-radius: 0.75rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
-        .card:hover {
+       .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        .chart-container {
+       .chart-container {
             position: relative;
             width: 100%;
             max-width: 800px;
@@ -75,17 +75,78 @@
             max-height: 40vh;
         }
         @media (min-width: 768px) {
-            .chart-container {
+           .chart-container {
                 height: 400px;
             }
         }
-        .accordion-content {
+       .accordion-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
         }
-        .accordion-button.open + .accordion-content {
-            max-height: 1000px; /* Adjust as needed */
+       .accordion-button.open +.accordion-content {
+            max-height: 5000px; /* Increased for more content */
+        }
+       .prose {
+            max-width: 65ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+       .prose h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0A2342;
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+       .prose h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0A2342;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+       .prose p {
+            line-height: 1.6;
+            color: #4a5568;
+            margin-bottom: 1.25em;
+        }
+       .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-bottom: 1.25em;
+        }
+       .prose li {
+            margin-bottom: 0.5em;
+        }
+       .prose strong {
+            color: #1a202c;
+        }
+       .prose table {
+            width: 100%;
+            margin-top: 2em;
+            margin-bottom: 2em;
+            border-collapse: collapse;
+        }
+       .prose th,.prose td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+       .prose th {
+            background-color: #f7fafc;
+            font-weight: 600;
+        }
+       .formula-box {
+            background-color: #f7fafc;
+            border-left: 4px solid #D4AF37;
+            padding: 1.5rem;
+            margin: 2em 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #0A2342;
+            border-radius: 0.25rem;
+            overflow-x: auto;
         }
     </style>
 </head>
@@ -93,20 +154,27 @@
 
     <div class="container mx-auto p-4 md:p-8 max-w-7xl">
 
-        <!-- Header -->
         <header class="text-center py-12">
             <h1 class="text-4xl md:text-6xl font-black text-accent tracking-tighter">THE ROMANIAN GAMBIT</h1>
             <p class="mt-4 text-lg md:text-xl text-secondary max-w-3xl mx-auto">An interactive blueprint for generating real estate income with strategic debt.</p>
         </header>
 
         <main>
-            <!-- Part I: The Investor's Mindset -->
+            <section id="introduction-text" class="py-12">
+                <div class="prose">
+                    <h2 class="text-3xl font-bold text-center text-accent">Introduction: The Money You Don't See</h2>
+                    <p>Listen kid, you've read the books. You know the difference between an asset and a liability. You understand the Quadrant. That's good. That puts you ahead of 90% of the population who are still just hauling buckets. But reading the map isn't the same as making the journey. You've come to me because you're ready to stop reading and start playing the game. And the game, right now, is in Romania.</p>
+                    <p>The principles you've learned from Robert Kiyosaki's *Cashflow Quadrant* are the essential "Why". They represent the fundamental mindset shift required to see the world not as an employee who works for money, but as an investor who makes money work for them. It’s about understanding that financial freedom is not about earning a higher salary; it's about building or acquiring systems that generate income independent of your time. This is the philosophical foundation.</p>
+                    <p>But philosophy alone doesn't buy assets. For that, you need a technical engine. That engine is what Thomas Anderson details in *The Value of Debt*. It is the sophisticated "How"—the strategic framework for using debt not as a chain, but as a lever to amplify wealth creation. While the masses are conditioned to fear and eliminate debt, the wealthy understand how to harness it, how to manage both sides of their balance sheet to create a financial engine that runs faster and more efficiently than simply saving and investing from a paycheck.</p>
+                    <p>This blueprint synthesizes these two powerful philosophies and applies them directly to a specific, timely opportunity. The central thesis is this: The 2025 Romanian real estate market is in a unique state of consolidation. While amateur investors are spooked by rising interest rates and slowing transaction volumes, the underlying fundamentals are exceptionally strong. Prices are rising, supply is limited, and the rental market is booming. This is a classic market inefficiency. The cautious are sitting on the sidelines, creating a prime entry point for the professional investor who is prepared to act. We are going to use strategically structured debt not as a burden, but as our primary tool to exploit this inefficiency and build a portfolio of cash-flowing assets. This is not about being risky; it is about understanding risk better than anyone else in the market.</p>
+                </div>
+            </section>
+
             <section id="mindset" class="py-12">
                 <h2 class="text-3xl font-bold text-center text-accent">Part I: The Investor's Mindset</h2>
-                <p class="text-center mt-2 text-secondary max-w-2xl mx-auto">Before you play the game, you need to learn the rules. This is about rewiring how you see money, systems, and debt.</p>
+                <p class="text-center mt-2 text-secondary max-w-2xl mx-auto">Before a single Euro is deployed, the most critical investment must be made in your own mindset.</p>
                 
                 <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
-                    <!-- Cashflow Quadrant -->
                     <div class="card p-6">
                         <h3 class="text-2xl font-bold text-accent">The Cashflow Quadrant</h3>
                         <p class="text-secondary mt-2">The world is divided into four types of people. Your goal is to move from the left side to the right side—from working for money to having money work for you.</p>
@@ -133,7 +201,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Good Debt vs Bad Debt -->
                     <div class="card p-6">
                         <h3 class="text-2xl font-bold text-accent">Good Debt vs. Bad Debt</h3>
                         <p class="text-secondary mt-2">Debt is just a tool. The rich use it to buy assets. The poor use it to buy liabilities. The difference is the direction of cash flow.</p>
@@ -149,37 +216,105 @@
                         </div>
                     </div>
                 </div>
+                <div class="prose mt-12">
+                    <h3>From Paycheck to Pipeline: Real Estate as a Business System</h3>
+                    <p>The first and most crucial mental shift is to re-contextualize what a rental property truly is. It is not merely an 'I' (Investor) quadrant asset; it is a 'B' (Business Owner) quadrant system. A 'B' quadrant investor builds or acquires a system. In this model:</p>
+                    <ul>
+                        <li><strong>The Property</strong> is the core of the system.</li>
+                        <li><strong>The Tenant</strong> is the customer, who pays to use the system.</li>
+                        <li><strong>The Property Manager</strong> is the operational staff, who runs the system on a day-to-day basis.</li>
+                        <li><strong>The Mortgage</strong> is a business loan, a form of financing that allows the system to be acquired.</li>
+                        <li><strong>The Positive Cash Flow</strong> is the profit the system generates after all operational costs, including the financing, are paid.</li>
+                    </ul>
+                    <p>By framing it this way, you, the investor, are the owner of a small business that sells housing services. Your goal is to build a robust system that can operate and generate profit with minimal personal involvement, freeing your time to focus on acquiring the next system.</p>
+                    <h3>The Art of the Spread: The Only Equation That Matters</h3>
+                    <p>The game of leveraged real estate investing is won or lost based on the spread between the total return of the asset and the total cost of the debt used to acquire it. The wider the spread, the faster you build wealth.</p>
+                    <div class="formula-box">
+                        Profit Spread % = (Gross Rental Yield % + Annual Appreciation %) - (Mortgage Interest Rate % + Annual Ownership Costs %)
+                    </div>
+                    <p>This equation moves beyond the simplistic and often misleading metric of monthly cash flow. Cash flow is important for liquidity, but the Profit Spread reveals the true wealth-building power of the investment. The sophisticated investor applies the Profit Spread formula. They see that the 7.5% cost of debt is being used to control an asset generating a total return of over 20% (e.g., 7% yield + 15% appreciation). Fear is replaced by a logical, data-driven decision.</p>
+                </div>
             </section>
 
-            <!-- Part II: The Romanian Opportunity -->
             <section id="opportunity" class="py-12">
                 <h2 class="text-3xl font-bold text-center text-accent">Part II: The Romanian Opportunity (2025)</h2>
                 <p class="text-center mt-2 text-secondary max-w-2xl mx-auto">A powerful mindset needs a fertile field. Here's a snapshot of the market—fewer sales, but rising prices point to a prime entry point for the professional investor.</p>
 
                 <div class="mt-12 card p-6">
                     <div class="flex flex-wrap justify-center gap-2 mb-6">
-                        <button id="btn-bucharest" class="city-btn btn-primary px-4 py-2 rounded-full text-sm font-medium btn-active">Bucharest</button>
-                        <button id="btn-cluj" class="city-btn btn-secondary px-4 py-2 rounded-full text-sm font-medium">Cluj-Napoca</button>
-                        <button id="btn-constanta" class="city-btn btn-secondary px-4 py-2 rounded-full text-sm font-medium">Constanța</button>
-                        <button id="btn-timisoara" class="city-btn btn-secondary px-4 py-2 rounded-full text-sm font-medium">Timișoara</button>
+                        <button id="btn-price" class="metric-btn btn-primary px-4 py-2 rounded-full text-sm font-medium btn-active">Avg. Price/m²</button>
+                        <button id="btn-growth" class="metric-btn btn-secondary px-4 py-2 rounded-full text-sm font-medium">1-Year Growth</button>
+                        <button id="btn-yield" class="metric-btn btn-secondary px-4 py-2 rounded-full text-sm font-medium">Gross Rental Yield</button>
                     </div>
                     <div class="chart-container">
                         <canvas id="marketChart"></canvas>
                     </div>
                     <div id="market-context" class="mt-4 text-center text-secondary text-sm">
-                        <!-- Context text will be updated by JS -->
                     </div>
+                </div>
+                <div class="prose mt-12">
+                    <h3>The Macro View: A Market in Consolidation</h3>
+                    <p>At first glance, the Romanian market might appear uncertain. The number of residential sales transactions in the first part of 2025 has decreased. This slowdown is a direct consequence of higher interest rates and persistent inflation, which have impacted affordability for the average Romanian buyer.</p>
+                    <p>However, this is where the professional investor sees opportunity, not risk. Despite the drop in transaction volume, property prices are not falling; they are accelerating. Nationwide prices have increased by as much as 14% year-on-year, with major urban centers like Bucharest and Cluj-Napoca experiencing growth of 15% or more. This paradoxical behavior—fewer sales but higher prices—points to a market with incredibly strong fundamentals, primarily a significant and persistent undersupply of quality housing.</p>
+                    <h3>Hotspots and Yields: Where to Place Your Bets</h3>
+                    <p>Success in real estate is location-dependent. In Romania, two cities stand out as primary targets for investment, each with a unique risk-and-reward profile, while others offer compelling secondary opportunities.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>City</th>
+                                <th>Avg. Price/m² (€)</th>
+                                <th>1-Year Price Growth (%)</th>
+                                <th>Gross Rental Yield (%)</th>
+                                <th>Investor Outlook</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Bucharest</strong></td>
+                                <td>€1,862</td>
+                                <td>15.0%</td>
+                                <td>6.0 - 7.0%</td>
+                                <td>Premier choice for balanced cash flow and strong appreciation. Deep rental market.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cluj-Napoca</strong></td>
+                                <td>€2,896</td>
+                                <td>15.7%</td>
+                                <td>3.9 - 5.1%</td>
+                                <td>Top market for capital appreciation, driven by the tech boom. Lower cash flow.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Constanța</strong></td>
+                                <td>€1,766</td>
+                                <td>13.6%</td>
+                                <td>6.0 - 9.0%</td>
+                                <td>High yield potential, especially for short-term rentals. Driven by tourism.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Timișoara</strong></td>
+                                <td>€1,700</td>
+                                <td>14.0%</td>
+                                <td>5.5 - 6.0%</td>
+                                <td>Stable market with solid yields, supported by industry and a large university.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>The Rules of the Game: Taxes and Regulations for the Foreign Investor</h3>
+                    <p>Navigating a foreign legal and tax system is a critical component of risk management. Fortunately, Romania's framework for foreign real estate investors is relatively straightforward and, in many ways, highly advantageous.</p>
+                    <ul>
+                        <li><strong>Acquisition Rules:</strong> For non-EU/EEA citizens, the process is straightforward for apartments and houses. However, direct ownership of land is prohibited; the standard solution is to establish a Romanian company (SRL) to own the land.</li>
+                        <li><strong>Taxation of Rental Income:</strong> Romania offers a significant advantage with a flat 10% income tax rate. A standard deduction of 20% from gross rental income is allowed, resulting in an effective tax rate of just 8% on gross rent.</li>
+                        <li><strong>Taxation on Sale (Capital Gains):</strong> The tax structure rewards long-term investors. The tax rate on profit from a sale is <strong>3%</strong> if owned for less than 3 years, and just <strong>1%</strong> if owned for more than 3 years.</li>
+                    </ul>
                 </div>
             </section>
             
-            <!-- Part III: The Profit Spread Calculator -->
             <section id="calculator" class="py-12">
                 <h2 class="text-3xl font-bold text-center text-accent">Part III: The Art of the Spread</h2>
                 <p class="text-center mt-2 text-secondary max-w-2xl mx-auto">This is the only equation that matters. It moves beyond simple cash flow to reveal the true wealth-building power of an investment. Use this tool to analyze your own deals.</p>
                 
                 <div class="mt-12 card p-6 md:p-8">
                     <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Inputs -->
                         <div class="space-y-6">
                             <div>
                                 <label for="purchasePrice" class="font-medium text-primary">Purchase Price (€)</label>
@@ -203,7 +338,6 @@
                             </div>
                         </div>
                         
-                        <!-- Outputs -->
                         <div class="bg-gray-50 rounded-lg p-6 flex flex-col justify-center">
                             <h3 class="text-xl font-bold text-center text-accent">Your Profit Spread</h3>
                             <div class="text-center my-4">
@@ -223,52 +357,62 @@
                 </div>
             </section>
 
-            <!-- Part IV: The Blueprint -->
             <section id="blueprint" class="py-12">
                 <h2 class="text-3xl font-bold text-center text-accent">Part IV: The Execution Blueprint</h2>
                 <p class="text-center mt-2 text-secondary max-w-2xl mx-auto">A step-by-step plan to take you from your current position to owning a portfolio of income-generating assets.</p>
 
                 <div class="mt-12 space-y-4">
-                    <!-- Step 1 -->
                     <div class="card">
                         <button class="accordion-button w-full text-left p-6 flex justify-between items-center">
                             <span class="text-xl font-bold text-accent">Phase 1: Financial Foundation</span>
                             <span class="text-2xl font-bold text-accent transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content px-6 pb-6">
-                            <p class="text-secondary">Before you build, you need a solid base. This is about taking an honest inventory of your financial reality. Eliminate bad debt and understand your numbers before you take on good debt. Your first move: create a detailed personal financial statement (Income Statement & Balance Sheet).</p>
+                            <div class="prose max-w-none pt-4">
+                                <p>Before you build, you need a solid base. This is about taking an honest inventory of your financial reality. Eliminate bad debt and understand your numbers before you take on good debt. Your first move: create a detailed personal financial statement (Income Statement & Balance Sheet).</p>
+                            </div>
                         </div>
                     </div>
-                    <!-- Step 2 -->
                     <div class="card">
                         <button class="accordion-button w-full text-left p-6 flex justify-between items-center">
                             <span class="text-xl font-bold text-accent">Phase 2: Acquiring the Asset</span>
                             <span class="text-2xl font-bold text-accent transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content px-6 pb-6">
-                            <p class="text-secondary">This is where the hunt begins. Assemble your local team (agent, lawyer, notary), secure your financing early, and follow the methodical acquisition process. Due diligence is your best friend. Remember the Bucharest Starter Flat scenario: a small negative cash flow can hide a massive increase in net worth when you analyze the full profit spread.</p>
+                            <div class="prose max-w-none pt-4">
+                                <p>This is where the hunt begins. Assemble your local team (agent, lawyer, notary), secure your financing early, and follow the methodical acquisition process. Due diligence is your best friend. Remember the Bucharest Starter Flat scenario: a small negative cash flow can hide a massive increase in net worth when you analyze the full profit spread.</p>
+                            </div>
                         </div>
                     </div>
-                    <!-- Step 3 -->
                     <div class="card">
                         <button class="accordion-button w-full text-left p-6 flex justify-between items-center">
                             <span class="text-xl font-bold text-accent">Phase 3: Managing the System</span>
                             <span class="text-2xl font-bold text-accent transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content px-6 pb-6">
-                            <p class="text-secondary">You bought an asset, not a job. Hire a professional property management company to handle day-to-day operations. This is the critical step that moves you from the 'S' quadrant (Self-Employed) to the 'B' quadrant (Business Owner). The fee (typically 8-12% of rent) is an investment in your own time and freedom, allowing you to focus on the next acquisition.</p>
+                            <div class="prose max-w-none pt-4">
+                                <p>You bought an asset, not a job. Hire a professional property management company to handle day-to-day operations. This is the critical step that moves you from the 'S' quadrant (Self-Employed) to the 'B' quadrant (Business Owner). The fee (typically 8-12% of rent) is an investment in your own time and freedom, allowing you to focus on the next acquisition.</p>
+                            </div>
                         </div>
                     </div>
-                    <!-- Step 4 -->
                     <div class="card">
                         <button class="accordion-button w-full text-left p-6 flex justify-between items-center">
                             <span class="text-xl font-bold text-accent">Phase 4: Scaling to Freedom</span>
                             <span class="text-2xl font-bold text-accent transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content px-6 pb-6">
-                            <p class="text-secondary">This is the "Monopoly" strategy. After 3-4 years, your property has appreciated. You use a cash-out refinance to pull out the equity, tax-free, and use that capital as the down payment for your next property. This creates a self-perpetuating wealth machine, where your assets buy you more assets, accelerating you towards financial freedom.</p>
+                            <div class="prose max-w-none pt-4">
+                                <p>This is the "Monopoly" strategy. After 3-4 years, your property has appreciated. You use a cash-out refinance to pull out the equity, tax-free, and use that capital as the down payment for your next property. This creates a self-perpetuating wealth machine, where your assets buy you more assets, accelerating you towards financial freedom.</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section id="conclusion-text" class="py-12">
+                <div class="prose">
+                    <h2 class="text-3xl font-bold text-center text-accent">Conclusion: Your First Move</h2>
+                    <p>The blueprint is on the table. The market is waiting. We've dissected the theory, we've run the numbers, and we've mapped out the play. Most people will read this, nod, and go back to their 'secure' jobs. They'll wait for all the lights to turn green before they start driving. But the professional knows that the game is played in the amber light. Your choice. Are you a spectator or are you a player? Your move.</p>
                 </div>
             </section>
         </main>
@@ -283,25 +427,32 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Market Data
             const marketData = {
-                bucharest: {
-                    labels: ['Avg. Price/m²', '1-Year Growth', 'Gross Rental Yield'],
-                    data: [1862, 15.0, 6.5],
-                    context: "Bucharest: The Cash Flow King. Premier choice for balanced cash flow and strong appreciation. Deep and resilient rental market."
-                },
-                cluj: {
-                    labels: ['Avg. Price/m²', '1-Year Growth', 'Gross Rental Yield'],
-                    data: [2896, 15.7, 4.5],
-                    context: "Cluj-Napoca: The Appreciation Powerhouse. Top market for capital growth, driven by the tech boom. Lower cash flow."
-                },
-                constanta: {
-                    labels: ['Avg. Price/m²', '1-Year Growth', 'Gross Rental Yield'],
-                    data: [1766, 13.6, 7.5],
-                    context: "Constanța: The Yield Hotspot. High yield potential, especially for short-term rentals, driven by tourism."
-                },
-                timisoara: {
-                    labels: ['Avg. Price/m²', '1-Year Growth', 'Gross Rental Yield'],
-                    data: [1700, 14.0, 5.7],
-                    context: "Timișoara: The Stable Performer. Solid yields and a stable market, supported by industry and a large university."
+                cities: ['Bucharest', 'Cluj-Napoca', 'Constanța', 'Timișoara'],
+                metrics: {
+                    price: {
+                        label: 'Avg. Price/m² (€)',
+                        data: [1862, 2896, 1766, 1700],
+                        backgroundColor: 'rgba(10, 35, 66, 0.5)',
+                        borderColor: 'rgba(10, 35, 66, 1)',
+                        context: "Price per square meter reflects the market's maturity and demand. Cluj-Napoca leads due to its tech boom, while Bucharest offers a more accessible entry point.",
+                        yAxisFormatter: (value) => '€' + value
+                    },
+                    growth: {
+                        label: '1-Year Growth (%)',
+                        data: [15.0, 15.7, 13.6, 14.0],
+                        backgroundColor: 'rgba(10, 35, 66, 0.5)',
+                        borderColor: 'rgba(10, 35, 66, 1)',
+                        context: "Annual appreciation shows the speed of capital growth. All major cities show strong growth, indicating a robust underlying market despite fewer sales.",
+                        yAxisFormatter: (value) => value + '%'
+                    },
+                    yield: {
+                        label: 'Gross Rental Yield (%)',
+                        data: [6.5, 4.5, 7.5, 5.7],
+                        backgroundColor: 'rgba(212, 175, 55, 0.8)',
+                        borderColor: 'rgba(212, 175, 55, 1)',
+                        context: "Rental yield is the engine of your cash flow. Constanța and Bucharest offer the highest returns, making them ideal for income-focused investors.",
+                        yAxisFormatter: (value) => value + '%'
+                    }
                 }
             };
 
@@ -310,37 +461,23 @@
             let marketChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: marketData.bucharest.labels,
+                    labels: marketData.cities,
                     datasets: [{
-                        label: 'Bucharest Market Data',
-                        data: marketData.bucharest.data,
-                        backgroundColor: [
-                            'rgba(10, 35, 66, 0.2)',
-                            'rgba(10, 35, 66, 0.5)',
-                            'rgba(212, 175, 55, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(10, 35, 66, 1)',
-                            'rgba(10, 35, 66, 1)',
-                            'rgba(212, 175, 55, 1)'
-                        ],
+                        label: marketData.metrics.price.label,
+                        data: marketData.metrics.price.data,
+                        backgroundColor: marketData.metrics.price.backgroundColor,
+                        borderColor: marketData.metrics.price.borderColor,
                         borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    indexAxis: 'y',
                     scales: {
-                        x: {
+                        y: {
                             beginAtZero: true,
                             ticks: {
-                                callback: function(value, index, values) {
-                                    if (index === 0) return '€' + value;
-                                    if (index === 1) return value + '%';
-                                    if (index === 2) return value + '%';
-                                    return value;
-                                }
+                                callback: marketData.metrics.price.yAxisFormatter
                             }
                         }
                     },
@@ -355,11 +492,11 @@
                                     if (label) {
                                         label += ': ';
                                     }
-                                    if (context.parsed.x !== null) {
-                                        if (context.label === 'Avg. Price/m²') {
-                                            label += '€' + context.parsed.x.toLocaleString();
+                                    if (context.parsed.y !== null) {
+                                        if (context.dataset.label.includes('€')) {
+                                            label += '€' + context.parsed.y.toLocaleString();
                                         } else {
-                                            label += context.parsed.x + '%';
+                                            label += context.parsed.y + '%';
                                         }
                                     }
                                     return label;
@@ -371,29 +508,32 @@
             });
 
             // Update Chart Function
-            function updateChart(cityKey) {
-                const city = marketData[cityKey];
-                marketChart.data.datasets[0].data = city.data;
-                marketChart.data.datasets[0].label = `${cityKey.charAt(0).toUpperCase() + cityKey.slice(1)} Market Data`;
+            function updateChart(metricKey) {
+                const metric = marketData.metrics[metricKey];
+                marketChart.data.datasets[0].data = metric.data;
+                marketChart.data.datasets[0].label = metric.label;
+                marketChart.data.datasets[0].backgroundColor = metric.backgroundColor;
+                marketChart.data.datasets[0].borderColor = metric.borderColor;
+                marketChart.options.scales.y.ticks.callback = metric.yAxisFormatter;
                 marketChart.update();
-                document.getElementById('market-context').textContent = city.context;
+                document.getElementById('market-context').textContent = metric.context;
 
                 // Update button styles
-                document.querySelectorAll('.city-btn').forEach(btn => {
+                document.querySelectorAll('.metric-btn').forEach(btn => {
                     btn.classList.remove('btn-active', 'btn-primary');
                     btn.classList.add('btn-secondary');
                 });
-                document.getElementById(`btn-${cityKey}`).classList.add('btn-active', 'btn-primary');
-                document.getElementById(`btn-${cityKey}`).classList.remove('btn-secondary');
+                document.getElementById(`btn-${metricKey}`).classList.add('btn-active', 'btn-primary');
+                document.getElementById(`btn-${metricKey}`).classList.remove('btn-secondary');
             }
             
-            document.getElementById('market-context').textContent = marketData.bucharest.context;
+            // Set initial context
+            document.getElementById('market-context').textContent = marketData.metrics.price.context;
 
-            // City Button Event Listeners
-            document.getElementById('btn-bucharest').addEventListener('click', () => updateChart('bucharest'));
-            document.getElementById('btn-cluj').addEventListener('click', () => updateChart('cluj'));
-            document.getElementById('btn-constanta').addEventListener('click', () => updateChart('constanta'));
-            document.getElementById('btn-timisoara').addEventListener('click', () => updateChart('timisoara'));
+            // Metric Button Event Listeners
+            document.getElementById('btn-price').addEventListener('click', () => updateChart('price'));
+            document.getElementById('btn-growth').addEventListener('click', () => updateChart('growth'));
+            document.getElementById('btn-yield').addEventListener('click', () => updateChart('yield'));
 
             // Profit Spread Calculator Logic
             const purchasePriceSlider = document.getElementById('purchasePrice');
@@ -448,7 +588,7 @@
             // Accordion Logic
             document.querySelectorAll('.accordion-button').forEach(button => {
                 button.addEventListener('click', () => {
-                    const isOpening = !button.classList.contains('open');
+                    const isOpening =!button.classList.contains('open');
                     
                     // Close all others
                     document.querySelectorAll('.accordion-button').forEach(b => {
